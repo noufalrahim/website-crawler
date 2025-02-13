@@ -5,6 +5,7 @@ import WebReport from "./pages/reports";
 
 export default function App() {
   const [renderItem, setRenderItem] = useState('search');
+  const [matchUrl, setMatchUrl] = useState();
   return (
     <div className="flex flex-row">
       {
@@ -13,10 +14,11 @@ export default function App() {
             <Search />
             <RecentSection 
               setRenderItem={setRenderItem}
+              setMatchUrl={setMatchUrl}
             />
           </>
         ) : (
-          <WebReport />
+          <WebReport matchUrl={matchUrl}/>
         )
       }
       {/*  */}

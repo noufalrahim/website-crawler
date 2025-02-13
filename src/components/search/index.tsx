@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -5,7 +6,7 @@ import { useState } from "react";
 
 export default function SearchComponent() {
     const [url, setUrl] = useState("");
-    const [result, setResult] = useState(null);
+    const [result, setResult] = useState<{ data: any } | null>(null);
     const [loading, setLoading] = useState(false);
 
     async function fetchResp() {
@@ -70,7 +71,7 @@ export default function SearchComponent() {
             {result && !loading && (
                 <div className="bg-gray-800 text-white mt-5 p-6 rounded-lg shadow-lg w-full max-w-lg">
                     <h3 className="text-xl font-bold mb-3">Analysis Result</h3>
-                    <p><strong>URL:</strong> {result.data.url}</p>
+                    <p><strong>URL:</strong> {result?.data.url}</p>
                     <p><strong>Timestamp:</strong> {new Date(result.data.timestamp).toLocaleString()}</p>
                     <hr className="my-3 border-gray-600" />
 

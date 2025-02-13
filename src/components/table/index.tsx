@@ -14,7 +14,8 @@ interface TableComponentProps {
   data: any;
   columns: any;
   itemsPerPage: any;
-  setRenderItem: any;
+  setRenderItem?: any;
+  setMatchUrl?: any;
 }
 
 export default function TableComponent({
@@ -22,6 +23,7 @@ export default function TableComponent({
   columns,
   itemsPerPage = 15,
   setRenderItem,
+  setMatchUrl
 }: TableComponentProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data.length / itemsPerPage);
@@ -31,12 +33,17 @@ export default function TableComponent({
     currentPage * itemsPerPage
   );
 
+  const handleClick = (url: string) => {
+    setRenderItem('report');
+    setMatchUrl(url);
+  };
+
   return (
     <div className="overflow-hidden rounded-lg shadow-md w-full bg-gray-900 border border-gray-700">
       <Table className="w-full bg-gray-900 rounded-lg">
         <TableHeader className="bg-blue-900 text-white">
           <TableRow>
-            {columns.map((col) => (
+            {columns.map((col: any) => (
               <TableHead key={col.key} className="text-left text-gray-300 font-semibold p-3">
                 {col.label}
               </TableHead>
@@ -44,13 +51,13 @@ export default function TableComponent({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paginatedData.map((row, index) => (
+          {paginatedData.map((row: any, index: any) => (
             <TableRow
               key={index}
               className="odd:bg-gray-850 even:bg-gray-800 hover:bg-gray-700 transition-colors"
             >
-              {columns.map((col) => (
-                <TableCell key={col.key} className="p-3 text-gray-300" onClick={() => setRenderItem('report')}>
+              {columns.map((col: any) => (
+                <TableCell key={col.key} className="p-3 text-gray-300" onClick={() => handleClick(row['url'])}>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}
                 </TableCell>
               ))}

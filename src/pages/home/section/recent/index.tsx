@@ -2,7 +2,7 @@ import { GetPastResponses } from "@/api/getPastResponses";
 import TableComponent from "@/components/table";
 import { useEffect, useState } from "react";
 
-export default function RecentSection({setRenderItem}: any) {
+export default function RecentSection({setRenderItem, setMatchUrl}: any) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -37,6 +37,7 @@ export default function RecentSection({setRenderItem}: any) {
                     data={data.length ? data : []}
                     itemsPerPage={10}
                     setRenderItem={setRenderItem}
+                    setMatchUrl={setMatchUrl}
                 />
             </div>
         </div>
