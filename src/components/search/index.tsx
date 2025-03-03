@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { BASEURL } from "@/constants/appConstants";
 
 export default function SearchComponent() {
     const [url, setUrl] = useState("");
@@ -20,7 +21,7 @@ export default function SearchComponent() {
 
         try {
             const response = await fetch(
-                `https://cdf7-103-179-230-157.ngrok-free.app/api/pagespeed/?url=${encodeURIComponent(url)}`,
+                `${BASEURL}/pagespeed/?url=${encodeURIComponent(url)}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -36,6 +37,7 @@ export default function SearchComponent() {
             }
 
             const data = await response.json();
+            console.log(data.data);
             setResult(data);
         } catch (error) {
             console.error("An error occurred while fetching responses:", error);
@@ -76,13 +78,13 @@ export default function SearchComponent() {
                     <hr className="my-3 border-gray-600" />
 
                     <div className="grid grid-cols-2 gap-4">
-                        <p><strong>CLS Score:</strong> {result.data["Cumulative Layout Shift Score"]}</p>
-                        <p><strong>FCP:</strong> {result.data["First Contentful Paint"]}</p>
-                        <p><strong>Timing:</strong> {result.data["Timing"]}</p>
-                        <p><strong>Total Blocking Time:</strong> {result.data["Total Blocking Time"]}</p>
-                        <p><strong>Speed Index:</strong> {result.data["Speed Index"]}</p>
-                        <p><strong>TTI:</strong> {result.data["Time To Interactive"]}</p>
-                        <p><strong>FMP:</strong> {result.data["First Meaningful Paint"]}</p>
+                        <p><strong>CLS Score:</strong> {result.data["cumulative_layout_shift"]}</p>
+                        <p><strong>FCP:</strong> {result.data["first_contentful_paint"]}</p>
+                        <p><strong>Server Response Time:</strong> {result.data["server_response_time"]}</p>
+                        <p><strong>Total Blocking Time:</strong> {result.data["total_blocking_time"]}</p>
+                        <p><strong>Speed Index:</strong> {result.data["speed_index"]}</p>
+                        <p><strong>TTI:</strong> {result.data["time_to_interactive"]}</p>
+                        <p><strong>FMP:</strong> {result.data["first_meaningful_paint"]}</p>
                     </div>
                 </div>
             )}

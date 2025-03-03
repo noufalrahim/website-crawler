@@ -12,12 +12,16 @@ export default function WebReport({ matchUrl }: any) {
                 setLoading(true); // Start loading
                 const respData = await GetPastResponses();
                 console.log(respData);
+                const filteredData = respData.past_searches
+                .filter((item: any) => item.search_type === "PageSpeed Insights")
+                .map((item: any) => item.data); 
+                // const filteredData = respData.past_searches.filter(
+                //     (item: any) => item.url === matchUrl
+                // );
 
-                const filteredData = respData.past_searches.filter(
-                    (item: any) => item.url === matchUrl
-                );
+                const reqData = filteredData.filter((item: any) => item.url === matchUrl);
 
-                setData(filteredData);
+                setData(reqData);
             } catch (error) {
                 console.error("Error fetching past responses:", error);
             } finally {
@@ -39,13 +43,13 @@ export default function WebReport({ matchUrl }: any) {
                         columns={[
                             { key: 'timestamp', label: 'Date' },
                             { key: 'url', label: 'Web URL' },
-                            { key: 'Cumulative Layout Shift Score', label: 'Cumulative Layout Shift Score' },
-                            { key: 'First Contentful Paint', label: 'First Contentful Paint (Crux)' },
-                            { key: 'Timing', label: 'Timing' },
-                            { key: 'Total Blocking Time', label: 'Total Blocking Time' },
-                            { key: 'Speed Index', label: 'Speed Index' },
-                            { key: 'Time To Interactive', label: 'Time To Interactive' },
-                            { key: 'First Meaningful Paint', label: 'First Meaningful Paint' }
+                            { key: 'cumulative_layout_shift', label: 'Cumulative Layout Shift Score' },
+                            { key: 'first_contentful_paint', label: 'First Contentful Paint (Crux)' },
+                            { key: 'estimated_input_latency', label: 'Estimated Input Latency' },
+                            { key: 'total_blocking_time', label: 'Total Blocking Time' },
+                            { key: 'speed_index', label: 'Speed Index' },
+                            { key: 'time_to_interactive', label: 'Time To Interactive' },
+                            { key: 'first_meaningful_paint', label: 'First Meaningful Paint' }
                         ]}
                         data={data}
                         itemsPerPage={10}

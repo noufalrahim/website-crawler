@@ -1,6 +1,8 @@
+import { BASEURL } from "@/constants/appConstants";
+
 export async function GetPastResponses() {
     try {
-      const response = await fetch("https://cdf7-103-179-230-157.ngrok-free.app/api/past-searches/", {
+      const response = await fetch(`${BASEURL}/past-searches/`, {
         method: "GET",
         mode: "cors",
         headers: {
@@ -14,6 +16,7 @@ export async function GetPastResponses() {
       }
   
       const data = await response.json();
+      console.log(data);
       return data; // Return data for further use
     } catch (error) {
       console.error("An error occurred while fetching past responses:", error);
