@@ -15,7 +15,7 @@ export default function GoogleAnalytics() {
         try {
             setLoading(true);
             const response = await fetch(
-                `${BASEURL}/search/?query=NIT%20Calicut`,
+                `${BASEURL}/search/?query=${search}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -31,8 +31,7 @@ export default function GoogleAnalytics() {
             }
 
             const data = await response.json();
-            console.log(data);
-            setResponseData(data);
+            setResponseData(data.results);
         }
         catch (e) {
             console.log(e);
@@ -63,7 +62,7 @@ export default function GoogleAnalytics() {
                     {loading ? "Analyzing..." : "Analyze"}
                 </Button>
             </div>
-            <SearchResults results={responseData}/>
+            <SearchResults results={responseData} />
         </div>
     )
 }

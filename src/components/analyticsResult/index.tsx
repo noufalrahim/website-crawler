@@ -1,13 +1,13 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-const SearchResults = ({ results }) => {
+const SearchResults = ({ results }: {results: any}) => {
   if (!results || results.length === 0) return null;
 
   return (
-    <div className="bg-gray-800 text-white mt-5 p-6 rounded-lg shadow-lg w-full">
+    <div className="bg-gray-800 text-white mt-5 p-6 rounded-lg shadow-lg w-full max-h-[80vh] overflow-y-auto">
       <h3 className="text-xl font-bold mb-3">Search Results</h3>
       <ul className="space-y-4">
-        {results.map((result, index) => (
+        {results.map((result: any, index: number) => (
           <li key={index} className="p-4 bg-gray-700 rounded-lg shadow">
             <a
               href={result.link}

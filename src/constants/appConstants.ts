@@ -1,1 +1,1 @@
-export const BASEURL = 'https://strong-jawfish-hideously.ngrok-free.app/api';
+export const BASEURL = 'https://intpurple-be.onrender.com/api';
