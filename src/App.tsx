@@ -3,7 +3,7 @@ import { Menu, X, Home, File, BarChart } from "lucide-react";
 import Search from "@/pages/home/section/search";
 import RecentSection from "@/pages/home/section/recent";
 import WebReport from "@/pages/reports";
-import GoogleAnalytics from "@/pages/googleAnalytics";
+import GoogleAnalytics from "./pages/googleAnalytics";
 
 export default function App() {
     const [isOpen, setIsOpen] = useState(true);
