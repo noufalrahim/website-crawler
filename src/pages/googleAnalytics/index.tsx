@@ -42,7 +42,7 @@ export default function GoogleAnalytics() {
 
 
     return (
-        <div className="w-full bg-primary h-screen p-10">
+        <div className="w-full bg-primary p-10">
             <p className="text-white text-xl">Google Analyses</p>
             <div className='items-center flex flex-row justify-start py-5 gap-5'>
                 <Input

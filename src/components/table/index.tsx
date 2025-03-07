@@ -13,9 +13,9 @@ import { Button } from "@/components/ui/button";
 interface TableComponentProps {
   data: any;
   columns: any;
-  itemsPerPage: any;
-  setRenderItem?: any;
-  setMatchUrl?: any;
+  itemsPerPage: number;
+  setRenderItem?: (renderItem: string) => void;
+  setMatchUrl?: (matchUrl: string | undefined) => void;
 }
 
 export default function TableComponent({
@@ -34,8 +34,12 @@ export default function TableComponent({
   );
 
   const handleClick = (url: string) => {
-    setRenderItem('report');
-    setMatchUrl(url);
+    if (setRenderItem) {
+      setRenderItem('report');
+    }
+    if (setMatchUrl) {
+      setMatchUrl(url);
+    }
   };
 
   return (

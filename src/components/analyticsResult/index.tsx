@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 const SearchResults = ({ results }: {results: any}) => {
   if (!results || results.length === 0) return null;
