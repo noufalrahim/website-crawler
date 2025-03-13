@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/utils/cn'
@@ -8,30 +8,70 @@ import { BASEURL } from '@/constants/appConstants'
 export default function GoogleAnalytics() {
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(false);
+    const [activeTab, setActiveTabs] = useState("Search");
 
     const [responseData, setResponseData] = useState([]);
 
     const fetchData = async () => {
+
         try {
             setLoading(true);
-            const response = await fetch(
-                `${BASEURL}/search/?query=${search}`,
-                {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "ngrok-skip-browser-warning": "true",
-                    },
-                }
-            );
+            let response;
+            if (activeTab === "Search") {
+                response = await fetch(
+                    `${BASEURL}/search/?query=${search}`,
+                    {
+                        method: "GET",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "true",
+                        },
+                    }
+                );
+            }
+            else if (activeTab === "Maps") {
+                response = await fetch(
+                    `${BASEURL}/maps-search/?query=${search}`,
+                    {
+                        method: "GET",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "true",
+                        },
+                    }
+                );
 
-            if (!response.ok) {
+            }
+            else if (activeTab === "Google Business API") {
+                response = await fetch(
+                    `${BASEURL}/business-search/?query=${search}`,
+                    {
+                        method: "GET",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "ngrok-skip-browser-warning": "true",
+                        },
+                    }
+                );
+            }
+            if (response && !response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            if (response) {
+                const data = await response.json();
+                console.log(data)
+                if (activeTab === "Google Business API") {
+                    setResponseData(data.business_results);
+                }
+                else {
+                    setResponseData(data.results);
 
-            const data = await response.json();
-            setResponseData(data.results);
+                }
+            }
+
         }
         catch (e) {
             console.log(e);
@@ -39,6 +79,10 @@ export default function GoogleAnalytics() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, [activeTab])
 
 
     return (
@@ -62,7 +106,7 @@ export default function GoogleAnalytics() {
                     {loading ? "Analyzing..." : "Analyze"}
                 </Button>
             </div>
-            <SearchResults results={responseData} />
+            <SearchResults results={responseData} activeTab={activeTab} setActiveTabs={setActiveTabs}/>
         </div>
     )
 }
